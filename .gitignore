@@ -1,0 +1,29 @@
+# Environment variables & secrets
+.env
+.env.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+comiccraft-env/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dynamic exports / cache
+static/exports/*.pdf
+static/exports/*.zip
+static/panels/*
+!static/panels/.gitkeep
