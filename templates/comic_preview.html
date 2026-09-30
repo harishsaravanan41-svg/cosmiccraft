@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Comic — ComicCraft</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(4, 4, 6, 0.93),
+                    rgba(4, 4, 6, 0.97)
+                ),
+                url("/static/images/background.jpg")
+                center / cover fixed;
+
+            color: #fff;
+
+            font-family: "Inter", sans-serif;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           HALFTONE BACKGROUND
+        ===================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    rgba(255,255,255,0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 10px 10px;
+
+            opacity: 0.18;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            position: relative;
+
+            z-index: 10;
+
+            width: min(1200px, calc(100% - 32px));
+
+            margin: 18px auto 0;
+
+            padding: 14px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: rgba(10,10,12,0.94);
+
+            border: 2px solid #2b2b30;
+
+            box-shadow:
+                5px 5px 0 #000;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+
+            color: white;
+        }
+
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #e6392f;
+
+            border: 3px solid #000;
+
+            color: white;
+
+            font-family: "Bangers", cursive;
+
+            font-size: 21px;
+
+            transform: rotate(-5deg);
+
+            box-shadow:
+                3px 3px 0 white;
+        }
+
+
+        .brand-name {
+            font-family: "Bangers", cursive;
+
+            font-size: 27px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .brand-subtitle {
+            color: #777;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+        }
+
+
+        .nav-actions {
+            display: flex;
+
+            gap: 10px;
+
+            align-items: center;
+        }
+
+
+        .nav-button {
+            padding: 8px 14px;
+
+            border: 1px solid #38383e;
+
+            background: #141416;
+
+            color: #bbb;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .nav-button:hover {
+            color: white;
+
+            border-color: #e6392f;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .page {
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1100px, calc(100% - 32px));
+
+            margin: 55px auto 80px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .hero-label {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            background: #f4b400;
+
+            color: #080808;
+
+            border: 3px solid #000;
+
+            box-shadow:
+                4px 4px 0 #000;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.5px;
+
+            transform: rotate(-2deg);
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero-title {
+            font-family: "Bangers", cursive;
+
+            font-size: clamp(
+                60px,
+                9vw,
+                105px
+            );
+
+            line-height: 0.85;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            text-shadow:
+                5px 5px 0 #000,
+                9px 9px 0 rgba(230,57,47,0.35);
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero-title span {
+            color: #e6392f;
+        }
+
+
+        .hero-description {
+            max-width: 600px;
+
+            margin: auto;
+
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           COMIC BOOK
+        ===================================================== */
+
+        .comic-book {
+            position: relative;
+
+            padding: 32px;
+
+            background:
+                #111113;
+
+            border: 4px solid #000;
+
+            box-shadow:
+                10px 10px 0 #000,
+                0 0 0 1px #35353a;
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel-box {
+            position: relative;
+
+            margin-bottom: 45px;
+
+            background: #09090a;
+
+            border: 5px solid #000;
+
+            box-shadow:
+                7px 7px 0 #000;
+
+            overflow: visible;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .panel-box:hover {
+            transform:
+                translateY(-5px)
+                rotate(-0.3deg);
+
+            box-shadow:
+                11px 11px 0 #000;
+        }
+
+
+        /* =====================================================
+           PANEL HEADER
+        ===================================================== */
+
+        .panel-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 13px 16px;
+
+            background: #161619;
+
+            border-bottom: 4px solid #000;
+        }
+
+
+        .panel-number {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 70px;
+
+            padding: 6px 12px;
+
+            background: #e6392f;
+
+            color: white;
+
+            border: 2px solid #000;
+
+            font-family: "Bangers", cursive;
+
+            font-size: 19px;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                3px 3px 0 #000;
+        }
+
+
+        .panel-title {
+            flex: 1;
+
+            color: #fff;
+
+            font-family: "Bangers", cursive;
+
+            font-size: 27px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           IMAGE
+        ===================================================== */
+
+        .image-frame {
+            position: relative;
+
+            width: 100%;
+
+            background: #000;
+
+            overflow: hidden;
+        }
+
+
+        .panel-img {
+            display: block;
+
+            width: 100%;
+
+            height: auto;
+
+            max-height: 680px;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.5s ease,
+                filter 0.5s ease;
+        }
+
+
+        .panel-box:hover .panel-img {
+            transform: scale(1.025);
+
+            filter:
+                contrast(1.05)
+                saturate(1.08);
+        }
+
+
+        /* =====================================================
+           COMIC CAPTION
+        ===================================================== */
+
+        .caption-box {
+            position: absolute;
+
+            top: 20px;
+
+            left: 20px;
+
+            max-width: 65%;
+
+            padding: 10px 15px;
+
+            background: #f6e8b1;
+
+            color: #111;
+
+            border: 3px solid #000;
+
+            box-shadow:
+                4px 4px 0 #000;
+
+            font-family: "Bangers", cursive;
+
+            font-size: 17px;
+
+            letter-spacing: 0.4px;
+
+            transform: rotate(-1.5deg);
+
+            z-index: 4;
+        }
+
+
+        /* =====================================================
+           SPEECH BUBBLE
+        ===================================================== */
+
+        .dialogue-bubble {
+
+            position: absolute;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            max-width: 45%;
+
+            padding: 16px 20px;
+
+            background: #fff;
+
+            color: #111;
+
+            border: 4px solid #000;
+
+            border-radius: 50%;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            line-height: 1.45;
+
+            text-align: center;
+
+            box-shadow:
+                5px 5px 0 #000;
+
+            z-index: 5;
+
+            transform: rotate(2deg);
+        }
+
+
+        .dialogue-bubble::after {
+            content: "";
+
+            position: absolute;
+
+            right: 22px;
+
+            bottom: -18px;
+
+            width: 24px;
+
+            height: 24px;
+
+            background: #fff;
+
+            border-right: 4px solid #000;
+
+            border-bottom: 4px solid #000;
+
+            transform: rotate(35deg);
+        }
+
+
+        /* =====================================================
+           STORY INFORMATION
+        ===================================================== */
+
+        .story-content {
+
+            padding: 20px;
+
+            background: #111113;
+
+            border-top: 4px solid #000;
+        }
+
+
+        .scene-description {
+
+            color: #999;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            font-style: italic;
+
+            padding: 12px 15px;
+
+            margin-bottom: 15px;
+
+            border-left: 4px solid #e6392f;
+
+            background: #18181b;
+        }
+
+
+        .story-blocks {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+
+        .story-block {
+
+            padding: 11px 14px;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            border-left: 4px solid #444;
+
+            background: #18181b;
+
+            color: #ccc;
+        }
+
+
+        .caption-block {
+            border-left-color: #f4b400;
+
+            color: #f4d76a;
+        }
+
+
+        .narration-block {
+            border-left-color: #64748b;
+
+            color: #c8c8c8;
+        }
+
+
+        .dialogue-block {
+            border-left-color: #e6392f;
+
+            color: #fff;
+        }
+
+
+        .prompt-block {
+            border-left-color: #555;
+
+            color: #777;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           COMIC SOUND EFFECTS
+        ===================================================== */
+
+        .sound-effect {
+
+            position: absolute;
+
+            z-index: 10;
+
+            font-family: "Bangers", cursive;
+
+            color: #f4b400;
+
+            font-size: 55px;
+
+            letter-spacing: 2px;
+
+            text-shadow:
+                4px 4px 0 #000,
+                -2px -2px 0 #000;
+
+            pointer-events: none;
+        }
+
+
+        .effect-one {
+            top: -30px;
+
+            right: 30px;
+
+            transform: rotate(8deg);
+        }
+
+
+        .effect-two {
+            bottom: -30px;
+
+            left: 25px;
+
+            color: #e6392f;
+
+            transform: rotate(-8deg);
+
+            font-size: 46px;
+        }
+
+
+        /* =====================================================
+           ACTION AREA
+        ===================================================== */
+
+        .actions {
+
+            margin-top: 55px;
+
+            padding: 35px;
+
+            text-align: center;
+
+            background: #111113;
+
+            border: 3px solid #000;
+
+            box-shadow:
+                7px 7px 0 #000;
+        }
+
+
+        .actions-title {
+
+            font-family: "Bangers", cursive;
+
+            font-size: 40px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .actions-title span {
+            color: #e6392f;
+        }
+
+
+        .actions-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            min-width: 220px;
+
+            padding: 15px 24px;
+
+            text-decoration: none;
+
+            font-family: "Bangers", cursive;
+
+            font-size: 22px;
+
+            letter-spacing: 1px;
+
+            border: 4px solid #000;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translate(3px, 3px);
+
+            box-shadow:
+                3px 3px 0 #000;
+        }
+
+
+        .btn-download {
+
+            background: #e6392f;
+
+            color: #fff;
+
+            box-shadow:
+                7px 7px 0 #000;
+        }
+
+
+        .btn-create {
+
+            background: #f4b400;
+
+            color: #080808;
+
+            box-shadow:
+                7px 7px 0 #000;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 40px;
+
+            color: #555;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .footer strong {
+            color: #888;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                width: calc(100% - 20px);
+
+                margin-top: 10px;
+
+                padding: 11px 13px;
+            }
+
+
+            .brand-name {
+                font-size: 23px;
+            }
+
+
+            .nav-actions {
+                display: none;
+            }
+
+
+            .page {
+
+                width: calc(100% - 20px);
+
+                margin-top: 35px;
+            }
+
+
+            .comic-book {
+
+                padding: 15px;
+            }
+
+
+            .panel-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .panel-title {
+
+                font-size: 23px;
+            }
+
+
+            .caption-box {
+
+                position: relative;
+
+                top: auto;
+                left: auto;
+
+                max-width: none;
+
+                margin: 12px;
+
+                transform: none;
+            }
+
+
+            .dialogue-bubble {
+
+                position: relative;
+
+                right: auto;
+                bottom: auto;
+
+                max-width: calc(100% - 24px);
+
+                margin: 15px 12px 20px;
+
+                border-radius: 25px;
+
+                transform: none;
+            }
+
+
+            .dialogue-bubble::after {
+                display: none;
+            }
+
+
+            .sound-effect {
+
+                display: none;
+            }
+
+
+            .story-content {
+
+                padding: 15px;
+            }
+
+
+            .actions {
+
+                padding: 25px 15px;
+            }
+
+
+            .btn {
+
+                width: 100%;
+
+                min-width: 0;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-mark">
+                CC
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    COMICCRAFT
+                </div>
+
+                <div class="brand-subtitle">
+                    AI STORY STUDIO
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <div class="nav-actions">
+
+            <a
+                href="/"
+                class="nav-button"
+            >
+                + New Comic
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="page">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-label">
+                ✦ YOUR STORY IS READY
+            </div>
+
+
+            <h1 class="hero-title">
+                YOUR <span>COMIC</span>
+            </h1>
+
+
+            <p class="hero-description">
+
+                Your story has been transformed into a
+                five-panel comic. Scroll through the panels
+                and bring your story to life.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             COMIC BOOK
+        ================================================== -->
+
+        <section class="comic-book">
+
+
+            {% for panel in layout %}
+
+            <article class="panel-box">
+
+
+                <!-- PANEL HEADER -->
+
+                <div class="panel-header">
+
+                    <div class="panel-number">
+                        PANEL {{ panel.panel }}
+                    </div>
+
+
+                    <h2 class="panel-title">
+                        {{ panel.title }}
+                    </h2>
+
+                </div>
+
+
+
+                <!-- IMAGE -->
+
+                <div class="image-frame">
+
+                    <img
+                        src="{{ panel.image_path }}"
+                        alt="Panel {{ panel.panel }} illustration"
+                        class="panel-img"
+                    >
+
+
+                    <!-- =====================================
+                         EXTRACT CAPTION / DIALOGUE
+                    ====================================== -->
+
+                    {% set caption_text = "" %}
+                    {% set dialogue_text = "" %}
+
+
+                    {% for line in panel.text.splitlines() %}
+
+                        {% set trimmed = line.strip() %}
+
+
+                        {% if "**CAPTION**" in trimmed %}
+
+                            {% set caption_text = trimmed.replace("**CAPTION**", "").strip() %}
+
+                        {% elif trimmed.startswith("CAPTION") %}
+
+                            {% set caption_text = trimmed.replace("CAPTION:", "").replace("CAPTION", "").strip() %}
+
+                        {% endif %}
+
+
+                        {% if "**DIALOGUE**" in trimmed %}
+
+                            {% set dialogue_text = trimmed.replace("**DIALOGUE**", "").strip() %}
+
+                        {% elif trimmed.startswith("DIALOGUE") %}
+
+                            {% set dialogue_text = trimmed.replace("DIALOGUE:", "").replace("DIALOGUE", "").strip() %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+
+                    <!-- CAPTION -->
+
+                    {% if caption_text %}
+
+                    <div class="caption-box">
+
+                        {{ caption_text }}
+
+                    </div>
+
+                    {% endif %}
+
+
+
+                    <!-- DIALOGUE -->
+
+                    {% if dialogue_text %}
+
+                    <div class="dialogue-bubble">
+
+                        {{ dialogue_text }}
+
+                    </div>
+
+                    {% endif %}
+
+
+
+                    <!-- SOUND EFFECT -->
+
+                    {% if panel.panel == 2 %}
+
+                        <div class="sound-effect effect-one">
+                            POW!
+                        </div>
+
+                    {% elif panel.panel == 4 %}
+
+                        <div class="sound-effect effect-two">
+                            BOOM!
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- STORY INFORMATION -->
+
+                <div class="story-content">
+
+
+                    {% if panel.scene_description %}
+
+                    <div class="scene-description">
+
+                        {{ panel.scene_description }}
+
+                    </div>
+
+                    {% endif %}
+
+
+
+                    <div class="story-blocks">
+
+
+                        {% for line in panel.text.splitlines() %}
+
+                            {% set trimmed = line.strip() %}
+
+
+                            {% if trimmed %}
+
+
+                                {% if "**CAPTION**" in trimmed or trimmed.startswith("CAPTION") %}
+
+                                    <div class="story-block caption-block">
+
+                                        {{ trimmed
+                                            .replace("**CAPTION**", "CAPTION:")
+                                            .replace("CAPTION", "CAPTION:", 1)
+                                        }}
+
+                                    </div>
+
+
+                                {% elif "**NARRATION**" in trimmed or trimmed.startswith("NARRATION") %}
+
+                                    <div class="story-block narration-block">
+
+                                        {{ trimmed
+                                            .replace("**NARRATION**", "NARRATION:")
+                                            .replace("NARRATION", "NARRATION:", 1)
+                                        }}
+
+                                    </div>
+
+
+                                {% elif "**DIALOGUE**" in trimmed or trimmed.startswith("DIALOGUE") %}
+
+                                    <div class="story-block dialogue-block">
+
+                                        {{ trimmed
+                                            .replace("**DIALOGUE**", "DIALOGUE:")
+                                            .replace("DIALOGUE", "DIALOGUE:", 1)
+                                        }}
+
+                                    </div>
+
+
+                                {% elif "**IMAGE PROMPT**" in trimmed or trimmed.startswith("IMAGE PROMPT") %}
+
+                                    <div class="story-block prompt-block">
+
+                                        {{ trimmed
+                                            .replace("**IMAGE PROMPT**", "VISUAL PROMPT:")
+                                            .replace("IMAGE PROMPT", "VISUAL PROMPT:", 1)
+                                        }}
+
+                                    </div>
+
+
+                                {% else %}
+
+                                    <div class="story-block narration-block">
+
+                                        {{ trimmed }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <section class="actions">
+
+
+            <h2 class="actions-title">
+
+                READY TO <span>TAKE IT WITH YOU?</span>
+
+            </h2>
+
+
+            <div class="actions-buttons">
+
+
+                <a
+                    href="/export-success?pdf_path={{ pdf_path }}"
+                    class="btn btn-download"
+                >
+                    💾 DOWNLOAD PDF
+                </a>
+
+
+                <a
+                    href="/"
+                    class="btn btn-create"
+                >
+                    ⚡ CREATE ANOTHER
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+            <strong>COMICCRAFT AI</strong>
+
+            &nbsp;•&nbsp;
+
+            Turn imagination into panels.
+
+            &nbsp;•&nbsp;
+
+            Powered by Gemini.
+
+        </footer>
+
+
+    </main>
+
+
+</body>
+</html>
